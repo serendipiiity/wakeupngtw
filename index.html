@@ -11,27 +11,31 @@ main{max-width:1080px;margin:auto;padding:68px 24px 60px}.intro{position:relativ
 .sc-top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.sc-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin:12px 0}.sc-red{color:#cf3f4b}.sc-blue{color:#206fc1}.sc-day.holiday .sc-day-number,.sc-day.holiday .sc-holiday-name{color:#cf3f4b}.sc-day.makeup .sc-day-number,.sc-day.makeup .sc-holiday-name{color:#206fc1}.sc-day.today .sc-day-number{color:#426482;background:#e7f2fc;outline:2px solid currentColor}.sc-day.today.holiday .sc-day-number{color:#cf3f4b;background:#fff1f2}.sc-day.today.makeup .sc-day-number{color:#206fc1;background:#e7f2fc}.sc-holiday-name{font-size:11px;line-height:1.5;color:#607a94;margin:0 0 7px;overflow-wrap:anywhere}.sc-weekdays span:first-child,.sc-weekdays span:last-child{color:#cf3f4b}.sc-btn:disabled{opacity:.6;cursor:wait}#sc-holiday-status{margin:6px 0 14px}@media(max-width:1100px){.schedule-top{align-items:flex-start;flex-wrap:wrap}.sc-top-actions{justify-content:flex-start}}@media(max-width:600px){.sc-top-actions{width:100%}.sc-top-actions .sc-btn{flex:1;padding:10px 8px;font-size:13px}}
 
 .sc-calendar-area{min-width:0}.schedule-layout{min-width:0}
-</style><style>.work-nav{max-width:none;position:relative}.work-brand{min-width:0}#cloud-settings-gate{margin-left:auto;position:relative}#cloud-settings-unlock-form{position:absolute;right:0;top:calc(100% + 12px);width:min(320px,calc(100vw - 32px));padding:18px;border:1px solid #bdd7ee;border-radius:12px;background:white;box-shadow:0 8px 24px #243b5326;z-index:30;color:#243b53}#cloud-settings-unlock-form label{display:block;font-size:14px}#cloud-settings-password{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid #bdd7ee;border-radius:8px;font:inherit}#cloud-settings-gate-error{font-size:13px;color:#b42318}@media(max-width:460px){.work-nav{gap:8px}.work-brand{font-size:17px}.work-home{padding:8px 10px}#cloud-settings-open{padding:8px 12px}}</style></head><body><header class="work-header"><nav class="work-nav" aria-label="主要導覽"><a class="work-brand" href="#home">起床上班了zzZ</a><a class="work-home" aria-current="page" href="#home">首頁</a><div id="cloud-settings-gate"><button type="button" class="sc-btn" id="cloud-settings-open">登入</button><form id="cloud-settings-unlock-form" hidden><label>設定密碼<input id="cloud-settings-password" type="password" required autocomplete="off" inputmode="numeric" aria-label="設定密碼"></label><p id="cloud-settings-gate-error" role="alert"></p><div class="cloud-actions"><button type="submit" class="sc-btn primary">確認登入</button><button type="button" class="sc-btn" id="cloud-settings-cancel">取消</button></div></form></div></nav></header><style>.cloud-panel{margin:12px 18px;padding:14px;border:1px solid #bdd7ee;border-radius:12px;background:white;color:#243b53;font-size:14px}.cloud-panel summary{cursor:pointer;font-weight:600}.cloud-panel label{display:block;margin:10px 0}.cloud-panel input,.cloud-panel textarea{padding:10px;border:1px solid #bdd7ee;border-radius:8px;width:100%;font:inherit}.cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.cloud-panel form{max-width:520px}.cloud-panel textarea{min-height:180px;font-family:monospace}.cloud-panel p{line-height:1.8}#cloud-status{margin:6px 0;overflow-wrap:anywhere}</style>
-<section class="cloud-panel" id="cloud-settings-panel" hidden><div id="cloud-settings-protected" hidden><button type="button" class="sc-btn" id="cloud-settings-lock">隱藏並鎖定設定</button><div id="cloud-status" role="status">尚未設定雲端，目前只儲存於此瀏覽器。</div><details><summary>雲端設定／登入</summary><p>首次設定：① 填入 Supabase 專案網址與 Publishable key（不可使用 Secret／service_role）。② 將下方 SQL 貼到 SQL Editor 執行。③ 在 Authentication → Users 建立並確認使用者信箱。④ 使用該帳號登入。所有裝置請使用同一專案及同一帳號。</p><p>填完後請將此網頁放到原本網站，以 HTTPS 開啟。設定會記在此瀏覽器；也可在 HTML 的 supabaseUrl、supabaseKey 預先填入公開設定。</p><label>專案網址<input id="cloud-url" type="url" placeholder="https://你的專案.supabase.co"></label><label>公開金鑰<input id="cloud-key" type="password" autocomplete="off" placeholder="sb_publishable_… 或 anon key"></label><button class="sc-btn" id="cloud-config-save" type="button">儲存連線設定</button>
-<form id="cloud-login-form"><label>登入信箱<input id="cloud-email" type="email" required autocomplete="username"></label><label>密碼<input id="cloud-password" type="password" required autocomplete="current-password"></label><button class="sc-btn primary" id="cloud-login" type="submit">登入</button></form>
-<div class="cloud-actions"><button class="sc-btn" id="cloud-logout" hidden>登出</button><button class="sc-btn" id="cloud-sync">立即同步</button><button class="sc-btn" id="cloud-reload">重新讀取雲端</button><button class="sc-btn" id="cloud-import">首次匯入原本本機資料</button><button class="sc-btn" id="cloud-backup">備份目前資料</button></div><p>登入後自動儲存排班、人員、銷量與庫存，每 15 秒讀取其他裝置的更新。同一區塊若被其他裝置先修改，會停止覆蓋並提示；請先備份再重新讀取。斷線時變更會保留為待同步資料。雲端設定後未登入或讀取未完成時暫停編輯。</p><details><summary>資料表 SQL（首次設定執行）</summary><textarea id="cloud-sql" readonly aria-label="資料表 SQL">create table if not exists public.work_sync (
- user_id uuid not null references auth.users(id) on delete cascade,
- kind text not null check (kind in ('schedule','taiwan','shopee1688')),
+</style><style>.work-nav{max-width:none;position:relative}.work-brand{min-width:0}#account-open,#account-logout{margin-left:auto;}#cloud-settings-gate{margin-left:0;position:relative}#cloud-settings-unlock-form{position:absolute;right:0;top:calc(100% + 12px);width:min(320px,calc(100vw - 32px));padding:18px;border:1px solid #bdd7ee;border-radius:12px;background:white;box-shadow:0 8px 24px #243b5326;z-index:30;color:#243b53}#cloud-settings-unlock-form label{display:block;font-size:14px}#cloud-settings-password{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid #bdd7ee;border-radius:8px;font:inherit}#cloud-settings-gate-error{font-size:13px;color:#b42318}@media(max-width:460px){.work-nav{gap:8px}.work-brand{font-size:15px}#cloud-settings-open{font-size:12px}.work-home{padding:8px 10px}#cloud-settings-open{padding:8px 12px}}</style><style>#account-dialog label{display:block;margin:12px 0}#account-dialog input{width:100%;margin-top:6px}#sc-person-form[hidden]{display:none!important}@media(max-width:460px){.work-nav{flex-wrap:wrap}}</style></head><body><header class="work-header"><nav class="work-nav" aria-label="主要導覽"><a class="work-brand" href="#home">起床上班了zzZ</a><a class="work-home" aria-current="page" href="#home">首頁</a><button type="button" class="sc-btn primary" id="account-open">登入</button><button type="button" class="sc-btn" id="account-logout" hidden>登出</button><div id="cloud-settings-gate"><button type="button" class="sc-btn" id="cloud-settings-open">雲端設定</button><form id="cloud-settings-unlock-form" hidden><label>設定密碼<input id="cloud-settings-password" type="password" required autocomplete="off" inputmode="numeric" aria-label="設定密碼"></label><p id="cloud-settings-gate-error" role="alert"></p><div class="cloud-actions"><button type="submit" class="sc-btn primary">確認登入</button><button type="button" class="sc-btn" id="cloud-settings-cancel">取消</button></div></form></div></nav></header><dialog id="account-dialog" class="sc-dialog" aria-labelledby="account-heading"><div class="sc-dialog-top"><h2 id="account-heading">帳號登入</h2><button type="button" class="sc-close" id="account-close" aria-label="關閉">×</button></div><p class="sc-hint">登入後可排班；銷量與庫存不需登入即可查看及修改。</p><form id="cloud-login-form"><label>登入信箱<input id="cloud-email" type="email" required autocomplete="username"></label><label>密碼<input id="cloud-password" type="password" required autocomplete="current-password"></label><button class="sc-btn primary" id="cloud-login" type="submit">登入</button></form><p id="account-message" class="sc-hint" role="status"></p></dialog><p id="public-sync-status" class="sc-hint" style="margin:8px 18px" role="status">正在連線到雲端資料…</p><style>.cloud-panel{margin:12px 18px;padding:14px;border:1px solid #bdd7ee;border-radius:12px;background:white;color:#243b53;font-size:14px}.cloud-panel summary{cursor:pointer;font-weight:600}.cloud-panel label{display:block;margin:10px 0}.cloud-panel input,.cloud-panel textarea{padding:10px;border:1px solid #bdd7ee;border-radius:8px;width:100%;font:inherit}.cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.cloud-panel form{max-width:520px}.cloud-panel textarea{min-height:180px;font-family:monospace}.cloud-panel p{line-height:1.8}#cloud-status{margin:6px 0;overflow-wrap:anywhere}</style>
+<section class="cloud-panel" id="cloud-settings-panel" hidden><div id="cloud-settings-protected" hidden><button type="button" class="sc-btn" id="cloud-settings-lock">隱藏並鎖定設定</button><div id="cloud-status" role="status">尚未設定雲端，目前只儲存於此瀏覽器。</div><details><summary>雲端設定／登入</summary><p>連線已預先填好。首次啟用：① 將下方新版 SQL 貼到 SQL Editor 執行。② 在 Authentication → Users 建立並確認你的登入帳號。③ 右上角登入後即可排班。若只需你的帳號排班，請在 Authentication 設定關閉新使用者註冊。舊版雲端資料需另行匯入新版共用表。所有裝置共用同一份資料；只有排班修改需要帳號登入。</p><p>填完後請將此網頁放到原本網站，以 HTTPS 開啟。設定會記在此瀏覽器；也可在 HTML 的 supabaseUrl、supabaseKey 預先填入公開設定。</p><label>專案網址<input id="cloud-url" type="url" placeholder="https://你的專案.supabase.co"></label><label>公開金鑰<input id="cloud-key" type="password" autocomplete="off" placeholder="sb_publishable_… 或 anon key"></label><button class="sc-btn" id="cloud-config-save" type="button">儲存連線設定</button>
+
+<div class="cloud-actions"><button class="sc-btn" id="cloud-logout" hidden>登出</button><button class="sc-btn" id="cloud-sync">立即同步</button><button class="sc-btn" id="cloud-reload">重新讀取雲端</button><button class="sc-btn" id="cloud-import">首次匯入原本本機資料</button><button class="sc-btn" id="cloud-backup">備份目前資料</button></div><p>排班與人員管理需帳號登入；班表公開檢視。銷量與庫存公開查看、修改及同步。每 15 秒讀取其他裝置更新。同一區塊若被其他裝置先修改，會停止覆蓋並提示；請先備份再重新讀取。斷線時變更會保留為待同步資料。未登入時班表唯讀，讀取未完成時暫停庫存編輯。</p><details><summary>資料表 SQL（首次設定執行）</summary><textarea id="cloud-sql" readonly aria-label="資料表 SQL">-- 新版共用資料表；不刪除舊版 work_sync 資料。
+create table if not exists public.work_shared (
+ kind text primary key check (kind in ('schedule','taiwan','shopee1688')),
  payload jsonb not null,
- revision integer not null default 1 check (revision > 0),
- primary key (user_id,kind)
+ revision integer not null default 1 check (revision > 0)
 );
-alter table public.work_sync enable row level security;
-revoke all on public.work_sync from anon, authenticated;
-grant select,insert,update,delete on public.work_sync to authenticated;
-drop policy if exists work_sync_select on public.work_sync;
-create policy work_sync_select on public.work_sync for select to authenticated using ((select auth.uid())=user_id);
-drop policy if exists work_sync_insert on public.work_sync;
-create policy work_sync_insert on public.work_sync for insert to authenticated with check ((select auth.uid())=user_id);
-drop policy if exists work_sync_update on public.work_sync;
-create policy work_sync_update on public.work_sync for update to authenticated using ((select auth.uid())=user_id) with check ((select auth.uid())=user_id);
-drop policy if exists work_sync_delete on public.work_sync;
-create policy work_sync_delete on public.work_sync for delete to authenticated using ((select auth.uid())=user_id);
+alter table public.work_shared enable row level security;
+revoke all on public.work_shared from anon, authenticated;
+grant select,insert,update on public.work_shared to anon;
+grant select,insert,update,delete on public.work_shared to authenticated;
+drop policy if exists work_shared_read on public.work_shared;
+create policy work_shared_read on public.work_shared for select to anon,authenticated using (true);
+drop policy if exists work_shared_public_insert on public.work_shared;
+create policy work_shared_public_insert on public.work_shared for insert to anon,authenticated with check (kind in ('taiwan','shopee1688'));
+drop policy if exists work_shared_public_update on public.work_shared;
+create policy work_shared_public_update on public.work_shared for update to anon,authenticated using (kind in ('taiwan','shopee1688')) with check (kind in ('taiwan','shopee1688'));
+drop policy if exists work_shared_schedule_insert on public.work_shared;
+create policy work_shared_schedule_insert on public.work_shared for insert to authenticated with check (kind='schedule' and (select auth.uid()) is not null);
+drop policy if exists work_shared_schedule_update on public.work_shared;
+create policy work_shared_schedule_update on public.work_shared for update to authenticated using (kind='schedule' and (select auth.uid()) is not null) with check (kind='schedule' and (select auth.uid()) is not null);
+drop policy if exists work_shared_schedule_delete on public.work_shared;
+create policy work_shared_schedule_delete on public.work_shared for delete to authenticated using (kind='schedule' and (select auth.uid()) is not null);
 </textarea><button type="button" id="cloud-sql-download" class="sc-btn">下載 SQL</button></details></details></div></section><script>(()=>{
  const $=id=>document.getElementById(id);
  $('cloud-settings-open').onclick=()=>{$('cloud-settings-unlock-form').hidden=false;$('cloud-settings-open').hidden=false;$('cloud-settings-password').focus();};
@@ -50,52 +54,64 @@ create policy work_sync_delete on public.work_sync for delete to authenticated u
  };
  $('cloud-settings-lock').onclick=()=>{$('cloud-settings-protected').hidden=true;$('cloud-settings-panel').hidden=true;$('cloud-settings-gate').hidden=false;$('cloud-password').value='';resetForm();$('cloud-settings-open').focus();};
 })();</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>// 可直接在這裡填入設定，也可使用網頁上的「雲端設定」。
-const supabaseUrl = "";
-const supabaseKey = ""; // Publishable / anon key；不可使用 service_role 或 Secret key
+const supabaseUrl = "https://zfpgilqysyqhiyvruvkz.supabase.co";
+const supabaseKey = "sb_publishable_VnFVffkR9vz5IlcXdwKslA_sd9A_9Pz"; // Publishable / anon key；不可使用 service_role 或 Secret key
 window.WorkCloud = (() => {
  const $=id=>document.getElementById(id), scopes=new Map();
  let db=null,user=null,ready=false,busy=false,config={},timer,authSubscription;
  const clone=v=>JSON.parse(JSON.stringify(v));
- function status(text){$('cloud-status').textContent=text;}
- function cacheKey(kind){return 'workCloudV1:'+config.url+':'+user.id+':'+kind;}
- function persist(scope){if(!user)return;try{localStorage.setItem(cacheKey(scope.kind),JSON.stringify({payload:scope.payload,revision:scope.revision,dirty:scope.dirty}));}catch(e){status('本機備份失敗，請保持頁面開啟並同步。');}}
- function setLock(){document.querySelectorAll('#schedule-view,.calculator-view,#sc-shift-dialog,#sc-person-dialog,#sc-quick-dialog').forEach(el=>el.inert=!!db&&!ready);}
+ function status(text){$('cloud-status').textContent=text;$('account-message').textContent=text;$('public-sync-status').textContent=text;}
+ function cacheKey(kind){return 'workCloudV1:'+config.url+':'+(kind==='schedule'?(user?.id||'viewer'):'shared')+':'+kind;}
+ function persist(scope){if(!db)return;try{localStorage.setItem(cacheKey(scope.kind),JSON.stringify({payload:scope.payload,revision:scope.revision,dirty:scope.dirty}));}catch(e){status('本機備份失敗，請保持頁面開啟並同步。');}}
+ function canEditSchedule(){return !!user&&ready;}
+ function setLock(){
+  const edit=canEditSchedule();
+  document.querySelectorAll('#sc-add,#sc-person-form,.sc-day-add').forEach(el=>el.hidden=!edit);
+  document.querySelectorAll('#sc-person-form input,#sc-person-form button,.sc-person-chip,.sc-shift').forEach(el=>el.disabled=!edit);
+  document.querySelectorAll('.sc-person-chip,.sc-shift').forEach(el=>el.draggable=edit);
+  document.querySelectorAll('#sc-shift-dialog,#sc-person-dialog,#sc-quick-dialog').forEach(el=>{el.inert=!edit;if(!edit&&el.open)el.close()});
+  document.querySelectorAll('.calculator-view').forEach(el=>el.inert=!!db&&!ready);
+  const sub=document.querySelector('#schedule-view .schedule-sub');if(sub)sub.textContent=edit?'把人員拖到日期新增排班；把班次拖到其他日期調整安排。':'可檢視每月班表與轉存圖片；登入後才可排班及管理人員。';
+  const access=$('sc-access-status');if(access)access.textContent=edit?'已登入，可新增、編輯與拖移排班。':'目前為唯讀班表；請按右上角「登入」後排班。';
+  $('account-open').hidden=!!user;$('account-logout').hidden=!user;
+ }
+
  function apply(scope,payload){scope.payload=clone(payload);scope.apply?.(clone(payload));}
  function register(kind,initial,applyFn,empty){
   let scope=scopes.get(kind);
   if(!scope){scope={kind,payload:clone(initial),legacy:clone(initial),empty:clone(empty),revision:null,dirty:false};scopes.set(kind,scope);}
   scope.apply=applyFn;applyFn(clone(scope.payload));setLock();
  }
- function changed(kind,payload){const scope=scopes.get(kind);if(!scope)return;if(db&&!ready){status('請先登入並讀取雲端資料。');scope.apply?.(clone(scope.payload));return;}
-  scope.payload=clone(payload);if(!db)scope.legacy=clone(payload);if(user){scope.dirty=true;persist(scope);status('已保留本機變更，等待雲端儲存…');clearTimeout(timer);timer=setTimeout(()=>sync(),700);}else status('尚未設定雲端，目前只儲存於此瀏覽器。');
+ function changed(kind,payload){const scope=scopes.get(kind);if(!scope)return;if((kind==='schedule'&&!canEditSchedule())||(db&&!ready)){status(kind==='schedule'?'請先登入帳號後排班。':'正在讀取雲端資料，請稍候。');scope.apply?.(clone(scope.payload));return;}
+  scope.payload=clone(payload);if(!db)scope.legacy=clone(payload);if(db&&ready){scope.dirty=true;persist(scope);status('已保留本機變更，等待雲端儲存…');clearTimeout(timer);timer=setTimeout(()=>sync(),700);}else status('尚未設定雲端，目前只儲存於此瀏覽器。');
  }
- async function fetchData(){const {data,error}=await db.from('work_sync').select('kind,payload,revision').eq('user_id',user.id);if(error)throw error;return data;}
- async function addData(kind,payload){const {data,error}=await db.from('work_sync').insert({user_id:user.id,kind,payload,revision:1}).select('revision').single();if(error)throw error;return data.revision;}
- async function updateData(scope){const {data,error}=await db.from('work_sync').update({payload:scope.payload,revision:scope.revision+1}).eq('user_id',user.id).eq('kind',scope.kind).eq('revision',scope.revision).select('revision');if(error)throw error;if(!data.length)throw new Error('其他裝置已修改同一份資料；請先備份，再按「重新讀取雲端」。');return data[0].revision;}
+ async function fetchData(){const {data,error}=await db.from('work_shared').select('kind,payload,revision');if(error)throw error;return data;}
+ async function addData(kind,payload){if(kind==='schedule'&&!canEditSchedule())throw new Error('未登入不能新增排班');const {data,error}=await db.from('work_shared').insert({kind,payload,revision:1}).select('revision').single();if(error)throw error;return data.revision;}
+ async function updateData(scope){if(scope.kind==='schedule'&&!canEditSchedule())throw new Error('未登入不能修改排班');const {data,error}=await db.from('work_shared').update({payload:scope.payload,revision:scope.revision+1}).eq('kind',scope.kind).eq('revision',scope.revision).select('revision');if(error)throw error;if(!data.length)throw new Error('其他裝置已修改同一份資料；請先備份，再按「重新讀取雲端」。');return data[0].revision;}
  // 排班刪除、數值歸零均透過更新快照儲存，避免整份資料被意外刪除。
- async function deleteData(kind){if(!ready||busy)throw new Error('目前不能刪除雲端資料');const scope=scopes.get(kind);if(!scope)throw new Error('未知資料類型');if(scope.revision===null)return;
-  busy=true;try{const {data,error}=await db.from('work_sync').delete().eq('user_id',user.id).eq('kind',kind).eq('revision',scope.revision).select('kind');if(error)throw error;if(!data.length)throw new Error('資料版本已變更，請重新讀取');scope.revision=null;scope.dirty=false;apply(scope,scope.empty);persist(scope);}finally{busy=false;}}
+ async function deleteData(kind){if(kind==='schedule'&&!canEditSchedule())throw new Error('未登入不能刪除排班');if(!ready||busy)throw new Error('目前不能刪除雲端資料');const scope=scopes.get(kind);if(!scope)throw new Error('未知資料類型');if(scope.revision===null)return;
+  busy=true;try{const {data,error}=await db.from('work_shared').delete().eq('kind',kind).eq('revision',scope.revision).select('kind');if(error)throw error;if(!data.length)throw new Error('資料版本已變更，請重新讀取');scope.revision=null;scope.dirty=false;apply(scope,scope.empty);persist(scope);}finally{busy=false;}}
  async function sync(forceReload=false){
-  if(!user||busy)return;busy=true;const wasReady=ready;
+  if(!db||busy)return;busy=true;const wasReady=ready;
   try{
    if(!ready||forceReload){ready=false;setLock();status('正在讀取雲端資料…');const rows=await fetchData();
     for(const scope of scopes.values()){
      const row=rows.find(r=>r.kind===scope.kind);let cached=null;try{cached=JSON.parse(localStorage.getItem(cacheKey(scope.kind))||'null');}catch(e){}
-     if(!forceReload&&cached?.dirty){scope.revision=cached.revision;scope.dirty=true;apply(scope,cached.payload);}
+     if(!forceReload&&cached?.dirty&&(scope.kind!=='schedule'||user)){scope.revision=cached.revision;scope.dirty=true;apply(scope,cached.payload);}
      else{scope.revision=row?.revision??null;scope.dirty=false;apply(scope,row?.payload??scope.empty);}persist(scope);
     }ready=true;setLock();
    }
-   for(const scope of scopes.values())if(scope.dirty){const sent=JSON.stringify(scope.payload);status('正在儲存雲端資料…');scope.revision=scope.revision===null?await addData(scope.kind,clone(scope.payload)):await updateData(scope);scope.dirty=sent!==JSON.stringify(scope.payload);persist(scope);}
+   for(const scope of scopes.values())if(scope.dirty&&(scope.kind!=='schedule'||canEditSchedule())){const sent=JSON.stringify(scope.payload);status('正在儲存雲端資料…');scope.revision=scope.revision===null?await addData(scope.kind,clone(scope.payload)):await updateData(scope);scope.dirty=sent!==JSON.stringify(scope.payload);persist(scope);}
    if(![...scopes.values()].some(s=>s.dirty)){
     const rows=await fetchData();for(const scope of scopes.values()){if(scope.dirty)continue;const row=rows.find(r=>r.kind===scope.kind);if((row?.revision??null)!==scope.revision){scope.revision=row?.revision??null;apply(scope,row?.payload??scope.empty);persist(scope);}}
-    status('已同步 · '+new Date().toLocaleTimeString('zh-TW')+' · '+user.email);
+    status('已同步 · '+new Date().toLocaleTimeString('zh-TW')+' · '+(user?.email||'免登入共用資料'));
    }else status('仍有變更等待同步，請按「立即同步」。');
-  }catch(e){if(!wasReady&&!ready)setLock();status('同步未完成：'+e.message+'（本機待同步資料會保留）');}
+  }catch(e){if(!wasReady&&!ready)setLock();status(e.code==='PGRST205'?'尚未建立共用資料表；請管理者執行雲端設定內的新版 SQL。':'同步未完成：'+e.message+'（本機待同步資料會保留）');}
   finally{busy=false;}
  }
- async function sessionChanged(session){const next=session?.user||null;if(next?.id===user?.id)return;if(busy){setTimeout(()=>sessionChanged(session),300);return;}
+ async function sessionChanged(session){const next=session?.user||null;if(next?.id===user?.id&&ready)return;if(busy){setTimeout(()=>sessionChanged(session),300);return;}
   user=next;ready=false;$('cloud-logout').hidden=!user;$('cloud-login').hidden=!!user;
-  if(user)await sync();else{for(const s of scopes.values()){s.revision=null;s.dirty=false;apply(s,s.empty);}setLock();status(db?'請登入，登入後會載入這個帳號的資料。':'目前使用本機儲存。');}
+  setLock();await sync();if(user)$('account-dialog').close();
  }
  async function configure(){
   if(busy||user)throw new Error('請等待同步完成並先登出，再修改專案設定。');
@@ -110,24 +126,24 @@ window.WorkCloud = (() => {
   authSubscription=db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>sessionChanged(session),0);}).data.subscription;
  }
  const run=fn=>async()=>{try{await fn();}catch(e){status(e.message);}};
- $('cloud-config-save').onclick=run(configure);
+ $('cloud-config-save').onclick=run(configure);$('account-open').onclick=()=>{$('account-dialog').showModal();$('cloud-email').focus();};$('account-close').onclick=()=>{$('cloud-password').value='';$('account-dialog').close();};$('account-logout').onclick=()=>$('cloud-logout').click();
  $('cloud-login-form').onsubmit=async e=>{e.preventDefault();await run(async()=>{if(!db)await configure();const {error}=await db.auth.signInWithPassword({email:$('cloud-email').value.trim(),password:$('cloud-password').value});if(error)throw error;$('cloud-password').value='';})()};
  $('cloud-logout').onclick=run(async()=>{if(busy||[...scopes.values()].some(s=>s.dirty))throw new Error('仍有待同步資料，請先完成同步或備份後重新讀取，再登出。');const {error}=await db.auth.signOut();if(error)throw error;await sessionChanged(null);});
  $('cloud-sync').onclick=()=>sync();
- $('cloud-reload').onclick=()=>{if(!user){status('請先登入。');return;}if([...scopes.values()].some(s=>s.dirty)&&!confirm('重新讀取將以雲端資料取代尚未同步的變更。請先按「備份目前資料」。確定繼續？'))return;sync(true)};
- $('cloud-import').onclick=()=>{if(!ready||busy){status('請先登入並完成讀取。');return;}if(!confirm('將原本此瀏覽器的排班、銷量與庫存匯入目前帳號。只匯入雲端尚未建立的區塊，確定繼續？'))return;let n=0;for(const s of scopes.values())if(s.revision===null){apply(s,s.legacy);s.dirty=true;persist(s);n++;}if(n)sync();else status('雲端已有資料，未匯入或覆蓋。');};
+ $('cloud-reload').onclick=()=>{if(!db){status('連線尚未設定。');return;}if([...scopes.values()].some(s=>s.dirty)&&!confirm('重新讀取將以雲端資料取代尚未同步的變更。請先按「備份目前資料」。確定繼續？'))return;sync(true)};
+ $('cloud-import').onclick=()=>{if(!ready||busy){status('請先登入並完成讀取。');return;}if(!confirm('將原本此瀏覽器的排班、銷量與庫存匯入共用資料表。只匯入雲端尚未建立的區塊，確定繼續？'))return;let n=0;for(const s of scopes.values())if(s.revision===null&&(s.kind!=='schedule'||canEditSchedule())){apply(s,s.legacy);s.dirty=true;persist(s);n++;}if(n)sync();else status('雲端已有資料，未匯入或覆蓋。');};
  $('cloud-backup').onclick=()=>{const payload=Object.fromEntries([...scopes.values()].map(s=>[s.kind,s.payload]));download('work-backup-'+Date.now()+'.json',JSON.stringify(payload,null,2),'application/json')};
  function download(name,text,type){const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  $('cloud-sql-download').onclick=()=>download('supabase_setup.sql',$('cloud-sql').value,'text/plain');
- setInterval(()=>{if(!document.hidden&&ready)sync()},15000);window.addEventListener('online',()=>sync());
+ setInterval(()=>{if(!document.hidden&&db)sync()},15000);window.addEventListener('online',()=>sync());
  window.addEventListener('beforeunload',e=>{if([...scopes.values()].some(s=>s.dirty)){e.preventDefault();e.returnValue='';}});
  setTimeout(()=>{try{config=JSON.parse(localStorage.getItem('workSupabaseConfigV1')||'{}')}catch(e){}$('cloud-url').value=supabaseUrl||config.url||'';$('cloud-key').value=supabaseKey||config.key||'';if($('cloud-url').value&&$('cloud-key').value)run(configure)();},0);
- return {register,changed,sync,fetchData,addData,deleteData,refreshLock:setLock};
+ return {register,changed,sync,fetchData,addData,deleteData,canEditSchedule,refreshLock:setLock};
 })();
 </script><main id="home-view"><section class="intro"><p class="eyebrow">日常工作站</p><h1>今天，從這裡開始。</h1><p>班表、工作流程與補貨，一個入口就找到。</p></section><section class="menu" aria-label="工作選單"><article class="card"><button type="button" class="menu-button" id="open-schedule"><span class="icon"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="24" height="23" rx="4"/><path d="M10 3v6M22 3v6M4 13h24M10 19h4M19 19h3M10 24h4"/></svg></span><span class="label-row"><span class="label">班表</span></span><span class="description">查看上班與休假安排</span></button></article><article class="card"><button type="button" class="menu-button" aria-expanded="false" aria-controls="workflow-panel"><span class="icon"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="9" height="9" rx="2"/><rect x="19" y="19" width="9" height="9" rx="2"/><path d="M13 8h10v7m-4-4 4 4 4-4M8 13v10h7m-4-4 4 4-4 4"/></svg></span><span class="label-row"><span class="label">工作流程</span><svg class="chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 9 6 6 6-6"/></svg></span><span class="description">查看各項工作的處理步驟</span></button><p id="workflow-panel" class="placeholder" hidden>工作流程內容尚未新增。</p></article><article class="card"><button type="button" class="menu-button" aria-expanded="false" aria-controls="restock-panel"><span class="icon"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 12 6v15l-12 6-12-6V9zM4 9l12 6 12-6M16 15v15M10 6l12 6v7"/></svg></span><span class="label-row"><span class="label">補貨</span><svg class="chevron" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 9 6 6 6-6"/></svg></span><span class="description">開啟蝦皮補貨建議計算器</span></button><div id="restock-panel" class="submenu" hidden><a href="#taiwan">蝦皮(台灣廠)<span aria-hidden="true">↗</span></a><a href="#shopee1688">蝦皮(1688)<span aria-hidden="true">↗</span></a></div></article></section><p class="footer">一件一件來，慢慢完成今天的工作。</p></main><section id="schedule-view" class="schedule-page" hidden aria-labelledby="schedule-heading">
- <div class="schedule-top"><div><p class="eyebrow">人員與工作安排</p><h1 id="schedule-heading">班表</h1><p class="schedule-sub">把人員拖到日期新增排班；把班次拖到其他日期調整安排。</p></div><div class="sc-top-actions"><button class="sc-btn" id="sc-export-fortnight">本週＋下週轉存圖片</button><button class="sc-btn" id="sc-export-month">整月轉存圖片</button><button class="sc-btn primary" id="sc-add">＋ 快速排班</button></div></div>
+ <div class="schedule-top"><div><p class="eyebrow">人員與工作安排</p><h1 id="schedule-heading">班表</h1><p id="sc-access-status" class="sc-hint">目前為唯讀班表；請登入後排班。</p><p class="schedule-sub">把人員拖到日期新增排班；把班次拖到其他日期調整安排。</p></div><div class="sc-top-actions"><button class="sc-btn" id="sc-export-fortnight">本週＋下週轉存圖片</button><button class="sc-btn" id="sc-export-month">整月轉存圖片</button><button class="sc-btn primary" id="sc-add">＋ 快速排班</button></div></div>
  <div class="schedule-layout">
-  <aside class="sc-people" aria-labelledby="people-heading"><h2 id="people-heading">人員</h2><form id="sc-person-form"><label for="sc-person-name">新增人員姓名</label><div class="sc-inline"><input id="sc-person-name" maxlength="40" placeholder="輸入姓名" required autocomplete="off"><button class="sc-btn primary" type="submit">新增</button></div></form><p class="sc-hint">拖曳姓名到月曆即可排班。點選姓名可編輯。</p><div id="sc-people-list"></div><p class="sc-storage" id="sc-storage">自動儲存於此瀏覽器；請使用同一瀏覽器與檔案位置開啟。</p></aside>
+  <aside class="sc-people" aria-labelledby="people-heading"><h2 id="people-heading">人員</h2><form id="sc-person-form"><label for="sc-person-name">新增人員姓名</label><div class="sc-inline"><input id="sc-person-name" maxlength="40" placeholder="輸入姓名" required autocomplete="off"><button class="sc-btn primary" type="submit">新增</button></div></form><p class="sc-hint">拖曳姓名到月曆即可排班。點選姓名可編輯。</p><div id="sc-people-list"></div><p class="sc-storage" id="sc-storage">共用班表由雲端讀取，僅登入帳號可修改。</p></aside>
   <div class="sc-calendar-area"><div class="sc-monthbar"><h2 id="sc-month" aria-live="polite"></h2><div class="sc-month-actions"><button class="sc-btn" id="sc-prev" aria-label="上一個月">‹</button><button class="sc-btn" id="sc-today">本月</button><button class="sc-btn" id="sc-next" aria-label="下一個月">›</button></div></div><p class="sc-hint sc-mobile-tip">月曆可左右滑動；點選班次可修改日期、時間與工作事項。</p><div class="sc-legend"><span class="sc-red">● 放假日／國定假日／六日</span><span class="sc-blue">● 補班日</span></div><p class="sc-hint">兩週圖片依今天所在週計算（週日～週六）；整月圖片依目前顯示月份。</p><p class="sc-hint" id="sc-holiday-status" role="status">正在載入假日資料…</p><div class="sc-calendar-scroll"><div class="sc-weekdays" aria-hidden="true"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="sc-calendar" id="sc-calendar" aria-label="每月班表"></div></div><p class="sc-hint" id="sc-count"></p></div>
  </div>
 </section>
@@ -153,19 +169,19 @@ const pad=n=>String(n).padStart(2,'0');
 const dateKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 const uid=()=>globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random().toString(36).slice(2)}`;
 function notify(message){$('sc-toast').textContent=message;$('sc-toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('sc-toast').hidden=true,2600);}
-function save(){try{localStorage.setItem(key,JSON.stringify(state));window.WorkCloud.changed('schedule',state);$('sc-storage').textContent='已保留本機備份；雲端儲存結果請查看上方同步狀態。';return true}catch(e){$('sc-storage').textContent='瀏覽器無法儲存資料，目前內容僅保留至關閉頁面前。';notify('目前無法自動儲存，請勿關閉頁面。');return false}}
+function save(){if(!window.WorkCloud.canEditSchedule()){window.WorkCloud.changed('schedule',state);return false;}try{localStorage.setItem(key,JSON.stringify(state));window.WorkCloud.changed('schedule',state);$('sc-storage').textContent='已保留本機備份；雲端儲存結果請查看上方同步狀態。';return true}catch(e){$('sc-storage').textContent='瀏覽器無法儲存資料，目前內容僅保留至關閉頁面前。';notify('目前無法自動儲存，請勿關閉頁面。');return false}}
 function nameOf(id){return state.people.find(p=>p.id===id)?.name||'未指定人員'}
 function element(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;}
 function payloadValid(p){return p&&(p.type==='person'?state.people.some(x=>x.id===p.id):p.type==='shift'&&state.shifts.some(x=>x.id===p.id));}
 function clearTargets(){document.querySelectorAll('.drop-target').forEach(el=>el.classList.remove('drop-target'));}
-function dropOn(payload,date){if(!payloadValid(payload))return;if(payload.type==='person'){openShift(date,payload.id)}else{const shift=state.shifts.find(x=>x.id===payload.id);if(shift.date===date)return;shift.date=date;const stored=save();renderCalendar();if(stored)notify('已移動至 '+date);}}
+function dropOn(payload,date){if(!window.WorkCloud.canEditSchedule())return;if(!payloadValid(payload))return;if(payload.type==='person'){openShift(date,payload.id)}else{const shift=state.shifts.find(x=>x.id===payload.id);if(shift.date===date)return;shift.date=date;const stored=save();renderCalendar();if(stored)notify('已移動至 '+date);}}
 function enableDrag(node,payload){
- node.draggable=true;
- node.addEventListener('dragstart',event=>{dragPayload=payload;event.dataTransfer.effectAllowed=payload.type==='shift'?'move':'copy';event.dataTransfer.setData('application/x-work-schedule',JSON.stringify(payload));event.dataTransfer.setData('text/plain',node.textContent);});
+ node.draggable=window.WorkCloud.canEditSchedule();
+ node.addEventListener('dragstart',event=>{if(!window.WorkCloud.canEditSchedule()){event.preventDefault();return;}dragPayload=payload;event.dataTransfer.effectAllowed=payload.type==='shift'?'move':'copy';event.dataTransfer.setData('application/x-work-schedule',JSON.stringify(payload));event.dataTransfer.setData('text/plain',node.textContent);});
  node.addEventListener('dragend',()=>{dragPayload=null;clearTargets()});
  // Touch devices: hold briefly to drag; a normal tap still opens the editor.
  let timer,start,ghost,active=false,suppress=false;
- node.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse')return;start={x:event.clientX,y:event.clientY};timer=setTimeout(()=>{active=true;suppress=true;node.setPointerCapture(event.pointerId);ghost=element('div','sc-touch-ghost',payload.type==='person'?nameOf(payload.id):'移動排班');document.body.appendChild(ghost);ghost.style.left=start.x+'px';ghost.style.top=start.y+'px';},350)});
+ node.addEventListener('pointerdown',event=>{if(!window.WorkCloud.canEditSchedule()||event.pointerType==='mouse')return;start={x:event.clientX,y:event.clientY};timer=setTimeout(()=>{active=true;suppress=true;node.setPointerCapture(event.pointerId);ghost=element('div','sc-touch-ghost',payload.type==='person'?nameOf(payload.id):'移動排班');document.body.appendChild(ghost);ghost.style.left=start.x+'px';ghost.style.top=start.y+'px';},350)});
  node.addEventListener('pointermove',event=>{if(!start)return;if(!active){if(Math.hypot(event.clientX-start.x,event.clientY-start.y)>8)clearTimeout(timer);return;}event.preventDefault();ghost.style.left=(event.clientX+12)+'px';ghost.style.top=(event.clientY+12)+'px';clearTargets();document.elementFromPoint(event.clientX,event.clientY)?.closest('.sc-day')?.classList.add('drop-target');});
  const finish=event=>{clearTimeout(timer);if(active){const day=document.elementFromPoint(event.clientX,event.clientY)?.closest('.sc-day');if(event.type==='pointerup'&&day)dropOn(payload,day.dataset.date);}active=false;start=null;ghost?.remove();ghost=null;clearTargets();setTimeout(()=>suppress=false,0)};
  node.addEventListener('pointerup',finish);node.addEventListener('pointercancel',finish);
@@ -194,28 +210,30 @@ function renderCalendar(loadHolidays=true){
   cell.addEventListener('drop',e=>{e.preventDefault();let payload=dragPayload;try{payload=JSON.parse(e.dataTransfer.getData('application/x-work-schedule'))||payload}catch(err){}dragPayload=null;clearTargets();dropOn(payload,keyDate)});
   grid.append(cell);
  }
+ window.WorkCloud.refreshLock();
  const prefix=`${year}-${pad(month+1)}-`,shifts=state.shifts.filter(x=>x.date.startsWith(prefix));$('sc-count').textContent=`本月 ${shifts.length} 筆排班 · ${new Set(shifts.map(x=>x.personId)).size} 位人員`;
  if(loadHolidays){const last=new Date(start.getFullYear(),start.getMonth(),start.getDate()+count-1);refreshHolidayStatus([...new Set([start.getFullYear(),year,last.getFullYear()])]);}
 }
-function render(){renderPeople();renderCalendar()}
+function render(){renderPeople();renderCalendar();window.WorkCloud.refreshLock()}
 function openShift(date,personId,shift){
+ if(!window.WorkCloud.canEditSchedule()){notify('請先登入帳號後排班');return;}
  if(!state.people.length){notify('請先在左側或上方新增人員');$('sc-person-name').focus();return;}
  $('sc-shift-form').reset();$('sc-shift-error').textContent='';$('sc-shift-id').value=shift?.id||'';$('sc-dialog-heading').textContent=shift?'編輯排班':'新增排班';$('sc-delete-shift').hidden=!shift;$('sc-copy-shift').hidden=!shift;
  $('sc-person').replaceChildren(...state.people.map(p=>{const o=element('option','',p.name);o.value=p.id;return o}));
  $('sc-date').value=date;$('sc-person').value=personId||state.people[0].id;$('sc-start').value=shift?.start||'09:00';$('sc-end').value=shift?.end||'18:00';$('sc-task').value=shift?.task||'';$('sc-shift-dialog').showModal();
 }
-function openPerson(person){$('sc-edit-person-id').value=person.id;$('sc-edit-person-name').value=person.name;$('sc-person-error').textContent='';$('sc-person-dialog').showModal()}
-$('sc-person-form').addEventListener('submit',event=>{event.preventDefault();const name=$('sc-person-name').value.trim();if(!name)return;if(state.people.some(p=>p.name===name)){notify('此人員已經存在');return;}state.people.push({id:uid(),name});save();$('sc-person-name').value='';renderPeople();});
-$('sc-person-edit-form').addEventListener('submit',event=>{event.preventDefault();const id=$('sc-edit-person-id').value,name=$('sc-edit-person-name').value.trim();if(!name){$('sc-person-error').textContent='請輸入姓名';return;}if(state.people.some(p=>p.id!==id&&p.name===name)){$('sc-person-error').textContent='此姓名已存在';return;}const person=state.people.find(p=>p.id===id);if(!person)return;person.name=name;save();render();$('sc-person-dialog').close();});
-$('sc-delete-person').addEventListener('click',()=>{const id=$('sc-edit-person-id').value;if(state.shifts.some(s=>s.personId===id)){$('sc-person-error').textContent='此人員仍有排班，請先刪除或改派相關班次。';return;}state.people=state.people.filter(p=>p.id!==id);save();renderPeople();$('sc-person-dialog').close()});
-$('sc-shift-form').addEventListener('submit',event=>{event.preventDefault();const item={id:$('sc-shift-id').value||uid(),personId:$('sc-person').value,date:$('sc-date').value,start:$('sc-start').value,end:$('sc-end').value,task:$('sc-task').value.trim()};
+function openPerson(person){if(!window.WorkCloud.canEditSchedule())return;$('sc-edit-person-id').value=person.id;$('sc-edit-person-name').value=person.name;$('sc-person-error').textContent='';$('sc-person-dialog').showModal()}
+$('sc-person-form').addEventListener('submit',event=>{event.preventDefault();if(!window.WorkCloud.canEditSchedule())return;const name=$('sc-person-name').value.trim();if(!name)return;if(state.people.some(p=>p.name===name)){notify('此人員已經存在');return;}state.people.push({id:uid(),name});save();$('sc-person-name').value='';renderPeople();});
+$('sc-person-edit-form').addEventListener('submit',event=>{event.preventDefault();if(!window.WorkCloud.canEditSchedule())return;const id=$('sc-edit-person-id').value,name=$('sc-edit-person-name').value.trim();if(!name){$('sc-person-error').textContent='請輸入姓名';return;}if(state.people.some(p=>p.id!==id&&p.name===name)){$('sc-person-error').textContent='此姓名已存在';return;}const person=state.people.find(p=>p.id===id);if(!person)return;person.name=name;save();render();$('sc-person-dialog').close();});
+$('sc-delete-person').addEventListener('click',()=>{if(!window.WorkCloud.canEditSchedule())return;const id=$('sc-edit-person-id').value;if(state.shifts.some(s=>s.personId===id)){$('sc-person-error').textContent='此人員仍有排班，請先刪除或改派相關班次。';return;}state.people=state.people.filter(p=>p.id!==id);save();renderPeople();$('sc-person-dialog').close()});
+$('sc-shift-form').addEventListener('submit',event=>{event.preventDefault();if(!window.WorkCloud.canEditSchedule())return;const item={id:$('sc-shift-id').value||uid(),personId:$('sc-person').value,date:$('sc-date').value,start:$('sc-start').value,end:$('sc-end').value,task:$('sc-task').value.trim()};
  if(!item.task){$('sc-shift-error').textContent='請填寫工作事項';return;}
  if(item.start===item.end){$('sc-shift-error').textContent='開始與結束時間不能相同';return;}
  if(!state.people.some(p=>p.id===item.personId))return;
  const index=state.shifts.findIndex(x=>x.id===item.id);if(index>=0)state.shifts[index]=item;else state.shifts.push(item);
  const stored=save();view=new Date(Number(item.date.slice(0,4)),Number(item.date.slice(5,7))-1,1);renderCalendar();$('sc-shift-dialog').close();if(stored)notify('已儲存排班');
 });
-$('sc-copy-shift').addEventListener('click',()=>{
+$('sc-copy-shift').addEventListener('click',()=>{if(!window.WorkCloud.canEditSchedule())return;
  if(!$('sc-shift-form').reportValidity())return;
  const task=$('sc-task').value.trim();
  if(!task){$('sc-shift-error').textContent='請填寫工作事項';return;}
@@ -226,7 +244,7 @@ $('sc-copy-shift').addEventListener('click',()=>{
  $('sc-shift-id').value=copy.id;$('sc-dialog-heading').textContent='編輯排班（已複製）';$('sc-shift-error').textContent='已建立一筆副本，可直接修改日期、人員或工作事項，再按儲存。';
  if(stored)notify('已複製排班，原班次保留');
 });
-$('sc-delete-shift').addEventListener('click',()=>{if(!confirm('確定刪除這筆排班？'))return;state.shifts=state.shifts.filter(x=>x.id!==$('sc-shift-id').value);save();renderCalendar();$('sc-shift-dialog').close()});
+$('sc-delete-shift').addEventListener('click',()=>{if(!window.WorkCloud.canEditSchedule())return;if(!confirm('確定刪除這筆排班？'))return;state.shifts=state.shifts.filter(x=>x.id!==$('sc-shift-id').value);save();renderCalendar();$('sc-shift-dialog').close()});
 document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>$(button.dataset.close).close()));
 $('sc-prev').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()});
 $('sc-next').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()});
@@ -252,7 +270,7 @@ function quickTime(){
  start.type=end.type='time';start.required=end.required=true;start.value='09:00';end.value='18:00';start.setAttribute('aria-label','開始時間');end.setAttribute('aria-label','結束時間');start.className='quick-start';end.className='quick-end';remove.type='button';
  remove.addEventListener('click',()=>{if($('sc-quick-times').children.length===1){$('sc-quick-error').textContent='請至少保留一組時段';return;}row.remove();quickSummary()});row.append(start,element('span','','～'),end,remove);$('sc-quick-times').append(row);quickSummary();
 }
-$('sc-add').addEventListener('click',()=>{
+$('sc-add').addEventListener('click',()=>{if(!window.WorkCloud.canEditSchedule())return;
  if(!state.people.length){notify('請先新增人員');$('sc-person-name').focus();return;}
  $('sc-quick-form').reset();quickDates.clear();quickView=new Date(view.getFullYear(),view.getMonth(),1);$('sc-quick-error').textContent='';
  $('sc-quick-person').replaceChildren(...state.people.map(p=>{const option=element('option','',p.name);option.value=p.id;return option}));$('sc-quick-times').replaceChildren();quickTime();quickCalendar();$('sc-quick-dialog').showModal();
@@ -263,7 +281,7 @@ $('sc-quick-weekdays').addEventListener('click',()=>{for(let d=1;d<=new Date(qui
 $('sc-quick-clear').addEventListener('click',()=>{quickDates.clear();quickCalendar()});
 $('sc-quick-add-time').addEventListener('click',quickTime);
 $('sc-quick-form').addEventListener('submit',event=>{
- event.preventDefault();const error=$('sc-quick-error');error.textContent='';
+ event.preventDefault();if(!window.WorkCloud.canEditSchedule())return;const error=$('sc-quick-error');error.textContent='';
  const dates=[...quickDates].sort(),personId=$('sc-quick-person').value,task=$('sc-quick-task').value.trim();
  const times=[...$('sc-quick-times').children].map(row=>({start:row.querySelector('.quick-start').value,end:row.querySelector('.quick-end').value}));
  if(!dates.length){error.textContent='請至少選取一個日期';return;}
